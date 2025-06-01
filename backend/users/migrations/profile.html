@@ -1,0 +1,10 @@
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+  Language: <input type="text" name="language" value="{{ profile.language }}"><br>
+  Currency: <input type="text" name="currency" value="{{ profile.currency }}"><br>
+  Wishlist: <textarea name="wishlist">{{ profile.wishlist }}</textarea><br>
+  Passport: <input type="file" name="passport"><br>
+  Visa: <input type="file" name="visa"><br>
+  <button type="submit">Update Profile</button>
+</form>
+
+<a href="{% url 'logout' %}">Logout</a>
