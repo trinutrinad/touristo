@@ -1,10 +1,8 @@
-from django.urls import path, include
-from .views import ExampleView, HelloView
+from django.urls import path
+from .views import login, register, attractions
 
 urlpatterns = [
-    path('example/', ExampleView.as_view(), name='example'),
-    path('hello/', HelloView.as_view(), name='hello'),
-
-    # Add user-related endpoints
-    path('user/', include('user_accounts.urls')),
+    path('login/', login, name='login'),
+    path('register/', register, name='register'),
+    path('attractions/', attractions, name='attractions'),
 ]

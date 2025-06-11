@@ -6,12 +6,30 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleLogin = () => {
-    console.log('Login attempt:', { email, password });
-    // Simulate successful login (replace with actual authentication logic)
-    router.push('/dashboard');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Login successful:', data);
+        localStorage.setItem('token', data.token); // Store token
+        router.push('/dashboard');
+      } else {
+        setError(data.error || 'Login failed');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -21,6 +39,7 @@ export default function Home() {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">LOGIN</h1>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <div>
           <div className="mb-4">
             <label className="flex items-center border rounded-lg p-3">

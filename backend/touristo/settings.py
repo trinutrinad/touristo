@@ -85,7 +85,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Media files (uploads like passport/visa documents)
 MEDIA_URL = '/media/'
@@ -103,3 +105,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+    'api.auth_backends.EmailBackend',  # Path to your custom backend
+    'django.contrib.auth.backends.ModelBackend',  # Default fallback
+]
